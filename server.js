@@ -4,6 +4,7 @@ const http = require("http");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const authRoutes = require("./routes/auth");
+const socket = require("./socket");
 
 const PORT = process.env.PORT || 5000;
 
@@ -16,6 +17,7 @@ app.use(cors());
 app.use("/api/auth", authRoutes);
 
 const server = http.createServer(app);
+socket.registerSocketServer(server);
 
 mongoose
   .connect(process.env.MONGODB_URI)
@@ -25,6 +27,6 @@ mongoose
     });
   })
   .catch((error) => {
-    console.log("Database connection faild");
+    console.error("Database connection faild");
     console.error(error);
   });
