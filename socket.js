@@ -1,6 +1,7 @@
 const socket = require("socket.io");
 const verifySocketToken = require("./middleware/authSocketMiddleware");
 const newConnectionHandler = require("./socketHandlers/newConnectionHandler");
+const disconnectHandler = require("./socketHandlers/disconnectHandler");
 
 const registerSocketServer = (server) => {
   const io = socket(server, {
@@ -16,6 +17,10 @@ const registerSocketServer = (server) => {
 
   io.on("connection", (socket) => {
     newConnectionHandler(socket, io);
+
+    socket.on("disconnect", () => {
+      disconnectHandler(socket.id);
+    });
   });
 };
 
