@@ -1,5 +1,8 @@
 const User = require("../models/User");
 const FriendsInvitation = require("../models/FriendsInvitation");
+const {
+  updateFriendsPendingInvitations,
+} = require("../socketHandlers/friends/invitaions.js");
 
 // @desc    send friend invitation
 // @route   POST /api/friends-nvitations/invite
@@ -42,6 +45,7 @@ const sendFriendInvitation = async (req, res) => {
     });
 
     //Send Invitaion in realtime
+    updateFriendsPendingInvitations(receiverUser._id.toString());
 
     res.send();
   } catch (e) {

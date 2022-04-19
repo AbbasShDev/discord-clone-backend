@@ -2,6 +2,7 @@ const socket = require("socket.io");
 const verifySocketToken = require("./middleware/authSocketMiddleware");
 const newConnectionHandler = require("./socketHandlers/newConnectionHandler");
 const disconnectHandler = require("./socketHandlers/disconnectHandler");
+const { setSocketServerInctance } = require("./serverStore");
 
 const registerSocketServer = (server) => {
   const io = socket(server, {
@@ -14,6 +15,8 @@ const registerSocketServer = (server) => {
   io.use((socket, next) => {
     verifySocketToken(socket, next);
   });
+
+  setSocketServerInctance(io);
 
   io.on("connection", (socket) => {
     newConnectionHandler(socket, io);
