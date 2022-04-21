@@ -24,7 +24,7 @@ const getUserActiveConnection = (userId) => {
   const activeConnections = [];
 
   connectedUsers.forEach((value, key) => {
-    if ((value.userId = userId)) {
+    if (value.userId === userId) {
       activeConnections.push(key);
     }
   });
