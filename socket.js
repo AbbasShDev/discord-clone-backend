@@ -22,7 +22,7 @@ const registerSocketServer = (server) => {
     newConnectionHandler(socket, io);
 
     socket.on("disconnect", () => {
-      disconnectHandler(socket.id);
+      disconnectHandler(socket, io);
     });
   });
 };
